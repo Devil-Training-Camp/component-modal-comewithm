@@ -1,8 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { Modal } from './components';
 
-import './style/variable.less';
-
 import './index.less';
 
 const App = () => {
