@@ -8,9 +8,9 @@ import React, {
 } from 'react';
 import classnames from 'classnames';
 import { Mask } from './Mask/Mask';
-import { CancelButton, OKButton } from './Button/Button';
+import { Button } from '../Button/Button';
 import './Modal.less';
-import { ButtonSize } from './Button/Button';
+import { NewButtonSize } from '../Button/Button';
 import { createPortal, render, unmountComponentAtNode } from 'react-dom';
 
 interface ModalProps {
@@ -28,7 +28,7 @@ interface ModalProps {
   closable?: boolean;
   wrapClassName?: string;
   okText?: ReactNode;
-  okType?: ButtonSize;
+  okType?: NewButtonSize;
   onOk: MouseEventHandler;
   onCancel: MouseEventHandler;
   okButtonProps?: CSSProperties;
@@ -65,7 +65,7 @@ interface ModalMethodsConfig {
   closable: boolean;
   wrapClassName?: string;
   okText: ReactNode;
-  okType: ButtonSize;
+  okType: NewButtonSize;
   onOk: MouseEventHandler;
   onCancel: MouseEventHandler;
   okButtonProps: CSSProperties;
@@ -212,18 +212,20 @@ const Modal: React.FC<ModalProps> = (props) => {
                 footer.map((button: ReactNode) => button)
               ) : footer != null ? (
                 <>
-                  <OKButton
-                    onOk={onOkClick}
-                    okButtonProps={okButtonProps}
-                    okText={okText}
-                    okType={okType}
-                  />
-                  <CancelButton
-                    onCancel={onCancelClick}
-                    cancelButtonProps={cancelButtonProps}
-                    cancelText={cancelText}
-                    cancelType={'primary'}
-                  />
+                  <Button
+                    type={'default'}
+                    onClick={onCancelClick}
+                    styles={cancelButtonProps}
+                  >
+                    {cancelText}
+                  </Button>
+                  <Button
+                    type={'primary'}
+                    onClick={onOkClick}
+                    styles={okButtonProps}
+                  >
+                    {okText}
+                  </Button>
                 </>
               ) : null}
             </div>
@@ -252,7 +254,7 @@ Modal.defaultProps = {
   // modalRender
   okButtonProps: {},
   okText: '确定',
-  okType: 'primary',
+  okType: 'middle',
   style: {},
   title: 'Modal title',
   width: 520,
@@ -278,7 +280,12 @@ export const ModalSuccess = (props: Partial<ModalMethodsConfig>) => {
     <Modal
       open
       afterClose={afterClose}
-      footer={[<OKButton onOk={() => {}} okText={'知道了'} />]}
+      // footer={[<OKButton onOk={() => {}} okText={'知道了'} />]}
+      footer={[
+        <Button onClick={() => {}} type={'primary'}>
+          知道了
+        </Button>
+      ]}
       onCancel={onCancel}
       onOk={onOk}
       {...restProps}

@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { Modal } from './components';
 
 import './index.less';
+import { Button } from './components';
 
 const App = () => {
   const afterClose = () => {
@@ -42,7 +43,24 @@ const App = () => {
           bodyStyle={{}}
           destroyOnClose={true}
           forceRender={true}
-          // footer={null}
+          footer={[
+            <Button onClick={() => {}} disabled type={'primary'} danger>
+              知道了
+            </Button>,
+            <Button onClick={() => {}} disabled type={'dashed'} ghost danger>
+              知道了
+            </Button>,
+            <Button onClick={() => {}} disabled type={'default'} ghost>
+              知道了
+            </Button>,
+            <Button onClick={() => {}} disabled type={'text'} ghost>
+              知道了
+            </Button>,
+            <Button onClick={() => {}} disabled type={'link'} ghost>
+              知道了
+            </Button>
+          ]}
+
           // centered={true}
         >
           <p>Some contents</p>

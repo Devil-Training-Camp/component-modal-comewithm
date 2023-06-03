@@ -1,0 +1,226 @@
+@color: rgba(0, 0, 0, 0.88);
+@font-size: 14px;
+@border-radius: 6px;
+@height: 32px;
+@padding-vertical: 4px;
+@padding-horizontal: 15px;
+
+@primary-color: #fff;
+@primary-background: #1677ff;
+@primary-hover-background: #4096ff;
+
+@default-background: #fff;
+@default-border-color: #d9d9d9;
+@default-color: rgba(0, 0, 0, 0.88);
+@default-hover-color: #4096ff;
+
+@dashed-background: #fff;
+@dashed-color: rgba(0, 0, 0, 0.88);
+@dashed-hover-color: #4096ff;
+
+@text-background: transparent;
+@text-hover-background: rgba(0, 0, 0, 0.06);
+@text-color: rgba(0, 0, 0, 0.88);
+
+@link-background: transparent;
+@link-color: #1677ff;
+@link-hover-color: #69b1ff;
+
+@danger-background: #fff;
+@danger-color: #ff4d4f;
+@danger-border-color: #ff4d4f;
+@danger-hover-color: #ff7875;
+@danger-hover-border-color: #ffa39e;
+@danger-hover-text-color: #fff2f0;
+
+#my-color(@color, @background-color, @border-color, @hover-color, @hover-background-color, @hover-border-color) {
+  color: @color;
+  background-color: @background-color;
+  border-color: @border-color;
+  &:hover {
+    color: @hover-color;
+    background-color: @hover-background-color;
+    border-color: @hover-border-color;
+  }
+}
+
+.newbtn {
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid transparent;
+  user-select: none;
+  outline: none;
+  color: @color;
+  background-color: transparent;
+  font-size: @font-size;
+  height: 32px;
+  margin: 2px 6px;
+  padding: @padding-vertical @padding-horizontal;
+  &-primary {
+    #my-color(
+            @primary-color, 
+            @primary-background, 
+            transparent,
+            @primary-color,
+            @primary-hover-background,
+            transparent
+        );
+    &.newbtn-danger:not(:disabled) {
+      #my-color(
+                @primary-color, 
+                @danger-color, 
+                transparent,
+                @primary-color,
+                @danger-hover-color,
+                transparent
+            );
+      &.newbtn-ghost:not(:disabled) {
+        border-style: solid;
+        #my-color(
+                    @danger-color, 
+                    transparent, 
+                    @danger-color,
+                    @danger-hover-color,
+                    transparent,
+                    @danger-hover-color
+                );
+      }
+    }
+    &.newbtn-ghost:not(:disabled) {
+      border-style: solid;
+      #my-color(
+                @primary-background, 
+                transparent, 
+                @primary-background,
+                @primary-hover-background,
+                transparent,
+                @primary-hover-background
+            );
+    }
+  }
+
+  &-default {
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+    border-style: solid;
+    #my-color(
+            @color, 
+            @default-background, 
+            @default-border-color,
+            @default-hover-color,
+            @default-background,
+            @default-hover-color
+        );
+
+    &.newbtn-danger:not(:disabled) {
+      #my-color(
+                @danger-color, 
+                transparent, 
+                @danger-border-color,
+                @danger-hover-color,
+                transparent,
+                @danger-hover-border-color
+            );
+    }
+
+    &.newbtn-ghost:not(:disabled) {
+      border-style: solid;
+      #my-color(
+                @primary-color, 
+                transparent, 
+                @primary-color,
+                @primary-hover-background,
+                transparent,
+                @primary-hover-background
+            );
+    }
+  }
+
+  &-dashed {
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+    border-style: dashed;
+    #my-color(
+            @dashed-color,
+            @dashed-background, 
+            @dashed-color,
+            @dashed-hover-color,
+            #fff,
+            @dashed-hover-color
+        );
+
+    &.newbtn-danger:not(:disabled) {
+      #my-color(
+                @danger-color,
+                transparent, 
+                @danger-border-color,
+                @danger-hover-color,
+                @primary-color,
+                @danger-hover-border-color
+            );
+    }
+
+    &.newbtn-ghost:not(:disabled) {
+      #my-color(
+                @primary-color,
+                transparent, 
+                @primary-color,
+                @primary-hover-background,
+                transparent,
+                @primary-hover-background
+            );
+    }
+  }
+
+  &-text {
+    #my-color(
+            @color,
+            transparent, 
+            transparent,
+            @color,
+            @text-hover-background,
+            transparent
+        );
+
+    &.newbtn-danger:not(:disabled) {
+      #my-color(
+                @danger-color,
+                transparent, 
+                transparent,
+                @danger-hover-color,
+                @danger-hover-text-color,
+                transparent
+            );
+    }
+  }
+
+  &-link {
+    #my-color(
+            @link-color,
+            transparent, 
+            transparent,
+            @link-hover-color,
+            transparent,
+            transparent
+        );
+
+    &.newbtn-danger:not(:disabled) {
+      #my-color(
+                @danger-color,
+                transparent, 
+                transparent,
+                @danger-hover-color,
+                transparent,
+                transparent
+            );
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+}
