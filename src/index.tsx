@@ -1,10 +1,14 @@
 import { createRoot } from 'react-dom/client';
+import { useState } from 'react';
+
 import { Modal } from './components';
-
-import './index.less';
 import { Button } from './components';
+import './index.less';
 
-const App = () => {
+export const App = () => {
+
+  const [visible, setVisible] = useState(false)
+
   const afterClose = () => {
     console.log('close modal');
   };
@@ -13,55 +17,46 @@ const App = () => {
     console.log('visible:', visible);
   };
 
+  const openModal = () => {
+    setVisible(true)
+  }
+
+  const closeModal = () => {
+    setVisible(false)
+  }
+
   return (
     <>
       <div className="app-container">
+        <Button className='modal-btn' type={'primary'} onClick={openModal}>open modal</Button>
         <Modal
-          open={true}
-          // mask={true}
-          // maskClosable={true}
-          // maskStyle={{
-          //   border: "1px cyan solid",
-          //   boxSizing: 'border-box'
-          // }}
+          open={visible}
+          onOk={closeModal}
+          onCancel={closeModal}
           afterClose={afterClose}
           afterOpenChange={afterOpenChange}
-          // style={{
-          //   top: '40px'
-          // }}
-          // width="600px"
-          title="use Hooks"
-          // zIndex={10}
-          // closable={true}
-          onOk={() => {}}
-          onCancel={() => {}}
-          // okText={'confirm'}
-          // okType={'primary'}
-          // cancelText={'cancel'}
-          okButtonProps={{}}
-          cancelButtonProps={{}}
-          bodyStyle={{}}
-          destroyOnClose={true}
-          forceRender={true}
+          closable={true}
+          style={{
+            top: '200px'
+          }}
+          // centered
           footer={[
-            <Button onClick={() => {}} disabled type={'primary'} danger>
+            <Button onClick={() => {}} type={'primary'} danger>
               知道了
             </Button>,
-            <Button onClick={() => {}} disabled type={'dashed'} ghost danger>
+            <Button onClick={() => {}} type={'dashed'} ghost danger>
               知道了
             </Button>,
-            <Button onClick={() => {}} disabled type={'default'} ghost>
+            <Button onClick={() => {}} type={'default'} ghost>
               知道了
             </Button>,
-            <Button onClick={() => {}} disabled type={'text'} ghost>
+            <Button onClick={() => {}} type={'text'} ghost>
               知道了
             </Button>,
-            <Button onClick={() => {}} disabled type={'link'} ghost>
+            <Button onClick={() => {}} type={'link'} ghost>
               知道了
             </Button>
           ]}
-
-          // centered={true}
         >
           <p>Some contents</p>
           <p>Some contents</p>

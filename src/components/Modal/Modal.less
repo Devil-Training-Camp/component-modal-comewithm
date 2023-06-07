@@ -1,3 +1,7 @@
+
+@x: 0;
+@y: 0;
+
 .modal-wrapper {
   position: absolute;
   width: 100vw;
@@ -6,9 +10,9 @@
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 }
 
 .modal-container {
@@ -17,12 +21,16 @@
   position: absolute;
   width: 520px;
   padding: 24px 24px 16px;
+
+  top: 100px;
+  margin: 0 auto;
 }
 
 .modal-center {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .modal-info {
@@ -54,4 +62,22 @@
 .modal-btns {
   display: flex;
   justify-content: flex-end;
+  padding: 6px 0 0;
+}
+
+
+@keyframes bodyFadeIn {
+  0% {
+    left: var(--x);
+    top: var(--y);
+    transform: scale(0);
+    transform-origin: center;
+    opacity: 0.3;
+  }
+  100%{
+    left: 50%;
+    transform-origin: center;
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
 }

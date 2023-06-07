@@ -6,23 +6,28 @@ interface MaskProps {
   mask: boolean;
   maskClosable: boolean;
   maskStyle: CSSProperties;
-  setModalClose: (e: React.MouseEvent) => void;
+  onClose: (e: React.MouseEvent) => void;
 }
-const prefixCls = 'mask';
+const prefixCls = 'modal-mask';
 export const Mask: React.FC<MaskProps> = (props) => {
-  const { mask, maskClosable, maskStyle, setModalClose } = props;
+  const { mask, maskClosable, maskStyle, onClose } = props;
 
   const maskCls = classnames(prefixCls, {
-    [`mask-show-bg`]: mask
+    [`modal-mask-show-bg`]: mask
   });
 
   const maskClose = (e: React.MouseEvent) => {
     if (mask && maskClosable) {
-      setModalClose(e);
+      onClose(e);
     }
   };
 
+  const mergedStyle = {
+    animation: `fadeIn 0.2s linear forwards`,
+    ...maskStyle
+  }
+
   return (
-    <div className={maskCls} style={{ ...maskStyle }} onClick={maskClose}></div>
+    <div className={maskCls} style={{ ...mergedStyle }} onClick={maskClose}></div>
   );
 };
