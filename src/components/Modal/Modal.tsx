@@ -41,57 +41,59 @@ const Modal: React.FC<ModalProps> = (props) => {
     getContainer = document.body,
     destroyOnClose = false,
     forceRender = false,
-    className
+    className,
+    confirmLoading = false,
+    focusTriggerAfterClose = false,
+    keyboard = false,
+    modalRender
   } = props;
 
+  /**modal content visible */
   const [modalVisible, setModalVisible] = useState(forceRender)
-  /**merged visible */
-  const mergedVisible = open || modalVisible
   /**mouse position */
   const [position, setPosition] = useState({x:0, y:0})
 
-  const modalContainerRef = useRef()
+  useEffect(() => {
+    if(open) {
+      setModalVisible(true)
+    }
+  }, [open])
 
   // modal open or close
   useEffect(() => {
     // open
-    if(mergedVisible) {
+    if(open && modalVisible) {
       afterOpenChange(true)
     }
-    // close
-    if(!mergedVisible) {
+    // close after animation end.
+    if(!(open && modalVisible)) {
       afterClose()
       afterOpenChange(false)
     }
-  }, [mergedVisible])
+  }, [open, modalVisible])
 
   // destroy modal
   useEffect(() => {
-    if(mergedVisible && destroyOnClose) {
+    if(!open && modalVisible && destroyOnClose) {
       setModalVisible(false)
     }
-  }, [mergedVisible, destroyOnClose])
+  }, [open, destroyOnClose])
 
   // get mouse position
-  // add animation
   useEffect(() => {
-    if(!mergedVisible) return
+    if(!(open && modalVisible)) return
     const clickListener = (e:MouseEvent) => {
-      console.log('e:', e)
       setPosition({
         x: e.clientX,
         y: e.clientY
       })
     }
     document.addEventListener('click', clickListener)
-    // add animation
-    
     return () => {
-      console.log('unload')
       document.removeEventListener('click', clickListener)
     }
 
-  }, [mergedVisible, mask])
+  }, [open, modalVisible])
 
    // button handle
   const onOkClick = (e: React.MouseEvent) => {
@@ -149,13 +151,15 @@ const Modal: React.FC<ModalProps> = (props) => {
     top: centered ? '' : style?.top,
     animation: 'bodyFadeIn .3s ease-in-out forwards',
     ...style,
+    display: modalVisible ? '' : 'none'
   }
 
   return (
-    mergedVisible &&
+    open &&
     createPortal(
       <div className={modalWrapperCls}>
         <Mask
+          visible={modalVisible}
           mask={mask}
           maskClosable={maskClosable}
           maskStyle={maskStyle}

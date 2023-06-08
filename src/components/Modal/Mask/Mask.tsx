@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import './Mask.less';
 
 interface MaskProps {
+  visible:boolean;
   mask: boolean;
   maskClosable: boolean;
   maskStyle: CSSProperties;
@@ -10,7 +11,7 @@ interface MaskProps {
 }
 const prefixCls = 'modal-mask';
 export const Mask: React.FC<MaskProps> = (props) => {
-  const { mask, maskClosable, maskStyle, onClose } = props;
+  const { visible, mask, maskClosable, maskStyle, onClose } = props;
 
   const maskCls = classnames(prefixCls, {
     [`modal-mask-show-bg`]: mask
@@ -28,6 +29,6 @@ export const Mask: React.FC<MaskProps> = (props) => {
   }
 
   return (
-    <div className={maskCls} style={{ ...mergedStyle }} onClick={maskClose}></div>
+    visible && <div className={maskCls} style={{ ...mergedStyle }} onClick={maskClose}></div>
   );
 };

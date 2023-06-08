@@ -1,5 +1,5 @@
 import { CSSProperties, MouseEventHandler, ReactNode } from "react";
-import { NewButtonSize, NewButtonType } from "../components/Button/Button";
+import { NewButtonType } from "../components/Button/Button";
 
 
 export interface ModalProps {
@@ -69,11 +69,15 @@ export interface ModalProps {
 
 
 
-  interface ModalMethodsConfig {
+export interface ModalMethodsConfig {
     afterClose: Function;
+    /**指定自动获得焦点的按钮 */
     autoFocusButton: null | 'ok' | 'cancel';
+    /**容器类名 */
     className: string;
+    /**内容 */
     content: ReactNode;
+    /**自定义图标 */
     icon: ReactNode;
     mask: boolean;
     maskClosable: boolean;
@@ -85,7 +89,7 @@ export interface ModalProps {
     closable: boolean;
     wrapClassName?: string;
     okText: ReactNode;
-    okType: NewButtonSize;
+    okType: NewButtonType;
     onOk: MouseEventHandler;
     onCancel: MouseEventHandler;
     okButtonProps: CSSProperties;
