@@ -1,7 +1,5 @@
 import React, {
-  CSSProperties,
   useEffect,
-  useRef,
   useState
 } from 'react';
 import classnames from 'classnames';
@@ -45,7 +43,7 @@ const Modal: React.FC<ModalProps> = (props) => {
     confirmLoading = false,
     focusTriggerAfterClose = false,
     keyboard = false,
-    modalRender
+    modalRender = undefined
   } = props;
 
   /**modal content visible */
@@ -154,6 +152,20 @@ const Modal: React.FC<ModalProps> = (props) => {
     display: modalVisible ? '' : 'none'
   }
 
+  // default render modal
+  const renderDefaultModal = () => {
+    return (
+      <div className={modalCls} style={mergedStyle}>
+        {renderCloseButton()}
+        <div className={modalBodyCls} style={bodyStyle}>
+          {title && <div className="modal-title">{title}</div>}
+          <div className="modal-content">{children}</div>
+          {renderFooterButton()}
+        </div>
+      </div>
+    )
+  }
+
   return (
     open &&
     createPortal(
@@ -165,14 +177,7 @@ const Modal: React.FC<ModalProps> = (props) => {
           maskStyle={maskStyle}
           onClose={onCancelClick}
         />
-        <div className={modalCls} style={mergedStyle}>
-          {renderCloseButton()}
-          <div className={modalBodyCls} style={bodyStyle}>
-            {title && <div className="modal-title">{title}</div>}
-            <div className="modal-content">{children}</div>
-            {renderFooterButton()}
-          </div>
-        </div>
+        {typeof modalRender === 'function' ? modalRender() : renderDefaultModal()}
       </div>,
       getPortalContainer()
     )

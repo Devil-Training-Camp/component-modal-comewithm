@@ -64,7 +64,7 @@ export interface ModalProps {
     /**是否支持键盘 esc 关闭 */
     keyboard?: boolean;
     /**自定义渲染对话框 */
-    modalRender?: (node: ReactNode) => ReactNode;
+    modalRender?: (node?: ReactNode) => ReactNode;
   }
 
 

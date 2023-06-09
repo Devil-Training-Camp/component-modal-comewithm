@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { ModalMethodsConfig } from "../../interface/modal";
-import Modal from './Modal'
+import {Modal} from './Modal'
 
 export const confirm = (config:Partial<ModalMethodsConfig>) => {
     const {
@@ -27,4 +27,31 @@ export const confirm = (config:Partial<ModalMethodsConfig>) => {
 
     const root = document.querySelector('#root');
     root && createRoot(root).render(component);
+
+    // return modal
+}
+
+export const info = (config:Partial<ModalMethodsConfig>) => {
+    return confirm({
+        icon: 'info',
+        ...config
+    })
+}
+export const success = (config:Partial<ModalMethodsConfig>) => {
+    return confirm({
+        icon: 'success',
+        ...config
+    })
+}
+export const error = (config:Partial<ModalMethodsConfig>) => {
+    return confirm({
+        icon: 'error',
+        ...config
+    })
+}
+export const warning = (config:Partial<ModalMethodsConfig>) => {
+    return confirm({
+        icon: 'warning',
+        ...config
+    })
 }
