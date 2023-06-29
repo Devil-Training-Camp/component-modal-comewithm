@@ -1,15 +1,11 @@
-import React, {
-  CSSProperties,
-  useEffect,
-  useRef,
-  useState
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
 import { Mask } from './Mask/Mask';
 import { Button } from '../Button/Button';
 import { createPortal } from 'react-dom';
 import { ModalProps } from '../../interface/modal';
 import './Modal.less';
+import { getPortalContainer } from '../../utils/util';
 
 const prefixCls = 'modal-container';
 const Modal: React.FC<ModalProps> = (props) => {
@@ -44,56 +40,53 @@ const Modal: React.FC<ModalProps> = (props) => {
     className
   } = props;
 
-  const [modalVisible, setModalVisible] = useState(forceRender)
+  const [modalVisible, setModalVisible] = useState(forceRender);
   /**merged visible */
-  const mergedVisible = open || modalVisible
+  const mergedVisible = open || modalVisible;
   /**mouse position */
-  const [position, setPosition] = useState({x:0, y:0})
-
-  const modalContainerRef = useRef()
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   // modal open or close
   useEffect(() => {
     // open
-    if(mergedVisible) {
-      afterOpenChange(true)
+    if (mergedVisible) {
+      afterOpenChange(true);
     }
     // close
-    if(!mergedVisible) {
-      afterClose()
-      afterOpenChange(false)
+    if (!mergedVisible) {
+      afterClose && afterClose();
+      afterOpenChange(false);
     }
-  }, [mergedVisible])
+  }, [mergedVisible]);
 
   // destroy modal
   useEffect(() => {
-    if(mergedVisible && destroyOnClose) {
-      setModalVisible(false)
+    if (mergedVisible && destroyOnClose) {
+      setModalVisible(false);
     }
-  }, [mergedVisible, destroyOnClose])
+  }, [mergedVisible, destroyOnClose]);
 
   // get mouse position
   // add animation
   useEffect(() => {
-    if(!mergedVisible) return
-    const clickListener = (e:MouseEvent) => {
-      console.log('e:', e)
+    if (!mergedVisible) return;
+    const clickListener = (e: MouseEvent) => {
+      console.log('e:', e);
       setPosition({
         x: e.clientX,
         y: e.clientY
-      })
-    }
-    document.addEventListener('click', clickListener)
+      });
+    };
+    document.addEventListener('click', clickListener);
     // add animation
-    
+
     return () => {
-      console.log('unload')
-      document.removeEventListener('click', clickListener)
-    }
+      console.log('unload');
+      document.removeEventListener('click', clickListener);
+    };
+  }, [mergedVisible, mask]);
 
-  }, [mergedVisible, mask])
-
-   // button handle
+  // button handle
   const onOkClick = (e: React.MouseEvent) => {
     onOk(e);
   };
@@ -104,38 +97,43 @@ const Modal: React.FC<ModalProps> = (props) => {
 
   // render close button
   const renderCloseButton = () => {
-    return closable ? 
-      <Button className='modal-close' onClick={onCancelClick} type={'text'}>{closeIcon ? closeIcon : 'X'}</Button>
-      : null
-  }
-  
+    return closable ? (
+      <Button className="modal-close" onClick={onCancelClick} type={'text'}>
+        {closeIcon ? closeIcon : 'X'}
+      </Button>
+    ) : null;
+  };
+
   // render footer
   const renderFooterButton = () => {
     return footer == null ? null : renderButton();
-  }
+  };
 
   // render button
-  const renderButton = () => 
+  const renderButton = () => (
     <div className="modal-btns">
       {Array.isArray(footer) ? footer : renderDefaultButton()}
     </div>
+  );
   // default button
   const renderDefaultButton = () => (
     <>
-      <Button type={'default'} onClick={onCancelClick} styles={cancelButtonProps}>{cancelText}</Button>
-      <Button type={okType} onClick={onOkClick} styles={okButtonProps}>{okText}</Button>
+      <Button
+        type={'default'}
+        onClick={onCancelClick}
+        styles={cancelButtonProps}
+      >
+        {cancelText}
+      </Button>
+      <Button type={okType} onClick={onOkClick} styles={okButtonProps}>
+        {okText}
+      </Button>
     </>
-  )
-
-  // get modal container
-  const getPortalContainer = () =>
-    typeof getContainer === 'function'
-      ? getContainer()
-      : getContainer || document.body;
+  );
 
   // classnames
   const modalCls = classnames(prefixCls, {
-    [`modal-center`]: centered,
+    [`modal-center`]: centered
   });
   const modalBodyCls = classnames('modal-info', className);
   const modalWrapperCls = classnames('modal-wrapper', wrapClassName);
@@ -144,12 +142,12 @@ const Modal: React.FC<ModalProps> = (props) => {
   const mergedStyle = {
     width: `${width}${typeof width === 'number' ? 'px' : ''}`,
     zIndex,
-    "--x": `${position.x}px`,
-    "--y": `${position.y}px`,
+    '--x': `${position.x}px`,
+    '--y': `${position.y}px`,
     top: centered ? '' : style?.top,
     animation: 'bodyFadeIn .3s ease-in-out forwards',
-    ...style,
-  }
+    ...style
+  };
 
   return (
     mergedVisible &&
@@ -170,7 +168,7 @@ const Modal: React.FC<ModalProps> = (props) => {
           </div>
         </div>
       </div>,
-      getPortalContainer()
+      getPortalContainer(getContainer)
     )
   );
 };

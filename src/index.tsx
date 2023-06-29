@@ -6,8 +6,7 @@ import { Button } from './components';
 import './index.less';
 
 export const App = () => {
-
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   const afterClose = () => {
     console.log('close modal');
@@ -18,17 +17,42 @@ export const App = () => {
   };
 
   const openModal = () => {
-    setVisible(true)
-  }
+    setVisible(true);
+  };
 
   const closeModal = () => {
-    setVisible(false)
-  }
+    setVisible(false);
+  };
+
+  const onStaticMethods = () => {
+    Modal.confirm({
+      title: 'Are you sure delete this task?',
+      content: 'Some descriptions',
+      okText: 'Yes',
+      okType: 'primary',
+      okButtonProps: {
+        disabled: true
+      },
+      cancelText: 'No',
+      onOk() {
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      }
+    });
+  };
 
   return (
     <>
       <div className="app-container">
-        <Button className='modal-btn' type={'primary'} onClick={openModal}>open modal</Button>
+        <Button type={'default'} onClick={onStaticMethods}>
+          Modal Methods
+        </Button>
+
+        <Button className="modal-btn" type={'primary'} onClick={openModal}>
+          open modal
+        </Button>
         <Modal
           open={visible}
           onOk={closeModal}
