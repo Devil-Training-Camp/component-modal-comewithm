@@ -65,19 +65,19 @@ export const App = () => {
           }}
           // centered
           footer={[
-            <Button onClick={() => {}} type={'primary'} danger>
+            <Button onClick={closeModal} type={'primary'} danger>
               知道了
             </Button>,
-            <Button onClick={() => {}} type={'dashed'} ghost danger>
+            <Button onClick={closeModal} type={'dashed'} ghost danger>
               知道了
             </Button>,
-            <Button onClick={() => {}} type={'default'} ghost>
+            <Button onClick={closeModal} type={'default'} ghost>
               知道了
             </Button>,
-            <Button onClick={() => {}} type={'text'} ghost>
+            <Button onClick={closeModal} type={'text'} ghost>
               知道了
             </Button>,
-            <Button onClick={() => {}} type={'link'} ghost>
+            <Button onClick={closeModal} type={'link'} ghost>
               知道了
             </Button>
           ]}

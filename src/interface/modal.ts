@@ -63,7 +63,7 @@ export interface ModalProps {
   /**是否支持键盘 esc 关闭 */
   keyboard?: boolean;
   /**自定义渲染对话框 */
-  modalRender?: (node: ReactNode) => ReactNode;
+  modalRender?: (node?: ReactNode) => ReactNode;
 }
 
 export interface ModalMethodsConfig {
@@ -99,12 +99,12 @@ export interface ModalMethodsConfig {
 }
 
 interface ModalAttributes {
-  success: (config: ModalMethodsConfig) => any;
-  info: (config: ModalMethodsConfig) => any;
-  confirm: (config: ModalMethodsConfig) => any;
-  warning: (config: ModalMethodsConfig) => any;
-  error: (config: ModalMethodsConfig) => any;
-  update: (config: ModalMethodsConfig) => any;
+  success: (config: Partial<ModalMethodsConfig>) => ReactNode;
+  info: (config: Partial<ModalMethodsConfig>) => ReactNode;
+  confirm: (config: Partial<ModalMethodsConfig>) => ReactNode;
+  warning: (config: Partial<ModalMethodsConfig>) => ReactNode;
+  error: (config: Partial<ModalMethodsConfig>) => ReactNode;
+  update: (config: Partial<ModalMethodsConfig>) => ReactNode;
   destroy: () => void;
   useModal: () => any[];
   destroyAll: () => void;
